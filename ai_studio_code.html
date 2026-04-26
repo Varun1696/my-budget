@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud-Ready Budget Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Budget Tracker</h1>
+            <div class="summary-cards">
+                <div class="card shadow">
+                    <span>Balance</span>
+                    <h2 id="total-balance">$0.00</h2>
+                </div>
+                <div class="card shadow income">
+                    <span>Income</span>
+                    <h2 id="total-income">$0.00</h2>
+                </div>
+                <div class="card shadow expense">
+                    <span>Expense</span>
+                    <h2 id="total-expense">$0.00</h2>
+                </div>
+            </div>
+        </header>
+
+        <section class="budget-setup card shadow">
+            <h3>Monthly Goal</h3>
+            <div class="input-group">
+                <input type="number" id="monthly-budget-input" placeholder="Set monthly budget">
+                <button onclick="setBudget()">Set</button>
+            </div>
+            <div class="progress-wrapper">
+                <div class="progress-bar"><div id="budget-progress-bar"></div></div>
+                <small id="budget-status">0% of budget spent</small>
+            </div>
+        </section>
+
+        <section class="add-transaction card shadow">
+            <h3>New Transaction</h3>
+            <form id="form">
+                <input type="text" id="description" placeholder="Description" required>
+                <input type="number" id="amount" placeholder="Amount (- for expense)" required>
+                <input type="date" id="date" required>
+                <button type="submit" class="btn-primary">Add Transaction</button>
+            </form>
+        </section>
+
+        <section class="history card shadow">
+            <h3>Recent History</h3>
+            <ul id="list" class="list"></ul>
+        </section>
+
+        <!-- Data Sync Section -->
+        <section class="sync-data card shadow">
+            <h3>Manage My Data</h3>
+            <p>Move data between devices via file:</p>
+            <div class="sync-btns">
+                <button onclick="exportData()" class="btn-secondary">Backup (Export)</button>
+                <label for="importFile" class="btn-secondary">Restore (Import)</label>
+                <input type="file" id="importFile" style="display:none" onchange="importData(event)">
+            </div>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
