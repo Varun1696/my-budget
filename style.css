@@ -1,76 +1,104 @@
 :root {
-    --bg: #f0f2f5;
-    --card-bg: #ffffff;
-    --primary: #4a90e2;
-    --success: #2ecc71;
-    --danger: #e74c3c;
-    --text: #333;
+    --glass: rgba(255, 255, 255, 0.2);
+    --glass-border: rgba(255, 255, 255, 0.3);
+    --text-color: #fff;
+    --income: #4ade80;
+    --expense: #fb7185;
 }
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
-    margin: 0;
-    padding: 10px;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-color);
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-.container {
-    max-width: 600px; /* Centered column for mobile/tablets */
-    margin: 0 auto;
+/* Dynamic Mesh Background */
+.glass-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    z-index: -1;
+    background: linear-gradient(45deg, #0f172a, #334155, #1e293b);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
 }
 
-.shadow { box-shadow: 0 4px 6px rgba(0,0,0,0.05); border-radius: 12px; }
-
-.card {
-    background: var(--card-bg);
-    padding: 20px;
-    margin-bottom: 15px;
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-/* Summary Grid: 1 column on mobile, 3 on desktop */
-.summary-cards {
+.container { max-width: 1000px; margin: auto; padding: 20px; }
+
+/* Frosted Glass Effect */
+.glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 25px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+}
+
+.dashboard-grid {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 10px;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 20px;
 }
 
-@media (min-width: 480px) {
-    .summary-cards { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 768px) {
+    .dashboard-grid { grid-template-columns: 1fr; }
 }
 
-.income h2 { color: var(--success); }
-.expense h2 { color: var(--danger); }
+h1, h2, h3 { margin-bottom: 15px; font-weight: 600; }
 
-/* Inputs and Buttons for Touch Screens */
-input, button {
+.bal-grid { display: flex; gap: 30px; margin-top: 10px; }
+.income p { color: var(--income); font-size: 1.2rem; }
+.expense p { color: var(--expense); font-size: 1.2rem; }
+
+/* Form Styles */
+input, select, button {
     width: 100%;
-    padding: 14px; /* Larger touch area for fingers */
-    margin: 8px 0;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px; /* Prevents auto-zoom on iPhone */
-}
-
-button {
-    background: var(--primary);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid var(--glass-border);
+    padding: 12px;
+    border-radius: 10px;
     color: white;
+    margin-bottom: 10px;
+    outline: none;
+}
+input::placeholder { color: rgba(255,255,255,0.6); }
+.row { display: flex; gap: 10px; }
+
+.btn-add {
+    background: var(--income);
+    color: #064e3b;
     font-weight: bold;
     border: none;
     cursor: pointer;
+    transition: 0.3s;
 }
+.btn-add:hover { transform: translateY(-2px); opacity: 0.9; }
 
-.btn-secondary { background: #6c757d; font-size: 12px; padding: 10px; display: inline-block; text-align: center; }
+/* Visualization */
+.canvas-container { position: relative; height: 250px; display: flex; justify-content: center; }
+canvas { max-width: 100%; height: 100% !important; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 15px; }
+.legend-item { font-size: 0.8rem; display: flex; align-items: center; gap: 5px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; }
 
-/* Transaction List */
-.list { list-style: none; padding: 0; max-height: 300px; overflow-y: auto; }
+/* List Styles */
+.list { list-style: none; max-height: 300px; overflow-y: auto; }
 .list li {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px;
-    border-bottom: 1px solid #eee;
+    display: flex; justify-content: space-between;
+    padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 /* Progress Bar */
-.progress-bar { background: #eee; height: 12px; border-radius: 6px; overflow: hidden; }
-#budget-progress-bar { height: 100%; background: var(--success); width: 0%; transition: 0.5s; }
+.progress-container { background: rgba(255,255,255,0.1); height: 10px; border-radius: 5px; overflow: hidden; margin: 10px 0; }
+#progress-bar { height: 100%; background: var(--income); width: 0%; transition: 0.5s; }
